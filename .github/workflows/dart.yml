@@ -1,4 +1,4 @@
-
+```yaml
 name: Build Android APK
 
 on:
@@ -26,6 +26,11 @@ jobs:
         with:
           channel: stable
 
+      - name: Check project structure
+        run: |
+          pwd
+          find . -maxdepth 4 -name pubspec.yaml -o -name settings.gradle -o -name settings.gradle.kts
+
       - name: Install dependencies
         working-directory: aurum_admin_app/aurum_admin_app
         run: flutter pub get
@@ -39,3 +44,5 @@ jobs:
         with:
           name: aurum-android-apk
           path: aurum_admin_app/aurum_admin_app/build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+```
