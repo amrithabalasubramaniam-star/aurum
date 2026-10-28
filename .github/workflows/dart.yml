@@ -11,6 +11,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: my_flutter_app
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -27,12 +31,12 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Check project structure
+      - name: Check Flutter project
         run: |
-          if [ ! -f pubspec.yaml ]; then
-            echo "Error: pubspec.yaml not found in repository root."
+          test -f pubspec.yaml || {
+            echo "pubspec.yaml not found in my_flutter_app"
             exit 1
-          fi
+          }
 
       - name: Install dependencies
         run: flutter pub get
@@ -44,6 +48,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: my_flutter_app/build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
-
