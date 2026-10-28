@@ -1,4 +1,3 @@
-```yaml
 name: Build Android APK
 
 on:
@@ -6,43 +5,3 @@ on:
   push:
     branches:
       - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-
-      - name: Check project structure
-        run: |
-          pwd
-          find . -maxdepth 4 -name pubspec.yaml -o -name settings.gradle -o -name settings.gradle.kts
-
-      - name: Install dependencies
-        working-directory: aurum_admin_app/aurum_admin_app
-        run: flutter pub get
-
-      - name: Build release APK
-        working-directory: aurum_admin_app/aurum_admin_app
-        run: flutter build apk --release
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: aurum-android-apk
-          path: aurum_admin_app/aurum_admin_app/build/app/outputs/flutter-apk/app-release.apk
-          if-no-files-found: error
-```
