@@ -13,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: my_flutter_app
+        working-directory: aurum_admin_app/aurum_admin_app
 
     steps:
       - name: Checkout repository
@@ -34,7 +34,7 @@ jobs:
       - name: Check Flutter project
         run: |
           test -f pubspec.yaml || {
-            echo "pubspec.yaml not found in my_flutter_app"
+            echo "pubspec.yaml not found"
             exit 1
           }
 
@@ -47,6 +47,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-apk
-          path: my_flutter_app/build/app/outputs/flutter-apk/app-release.apk
+          name: aurum-admin-apk
+          path: aurum_admin_app/aurum_admin_app/build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
